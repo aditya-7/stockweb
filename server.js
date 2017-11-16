@@ -1,4 +1,4 @@
-var port = process.env.PORT || 8081;
+var port = process.env.PORT || 3030;
 var express = require('express'),
     app = express();
 var request = require('request');
@@ -43,7 +43,7 @@ app.get('/quote', function (req, res) {
             console.log("Stock retreived for symbol " + metaData["2. Symbol"]);
 
             stock.table["Symbol"] = metaData["2. Symbol"];
-            stock.table["LastPrice"] = parseFloat(timeSeriesData["4. close"]).toFixed(2);
+            stock.table["LastPrice"] = parseFloat(timeSeriesData["4. close"], 10);
             stock.table["Change"] = (parseFloat(timeSeriesData["4. close"]) - parseFloat(timeSeriesData["1. open"])).toFixed(2);
             stock.table["Timestamp"] = (lastTime + " 16:00:00 EDT");
             stock.table["Open"] = parseFloat(timeSeriesData["1. open"]).toFixed(2);

@@ -1,6 +1,8 @@
-var myApp = angular.module('myApp', ["autoCompleteModule", "ui.bootstrap"]);
+var myApp = angular.module('myApp', ["autoCompleteModule", "ui.bootstrap", "ngAnimate"]);
 
 myApp.controller("searchSymbolController", function ($scope, $http) {
+    
+    var errorInResponse = "/Invalid API call./";
     $scope.getQuoteDisabled = true;
     $scope.containsFavList = true;
     $scope.right_chevron = true;
@@ -69,10 +71,11 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
         $http.get("/quote?symbol=" + inputSymbol)
             .then(function (response) {
             $scope.currentStockProgressvalue = 100;
-            setTimeout(function () {
+            setTimeout(function() {
                 $scope.currentStockDataReceived = true;
                 $scope.selectedStock = response.data.table;
                 $scope.isEnabled = true;
+                console.log(response.data.chart);
                 $scope.priceSelected(response.data.chart);  //Render price chart
                 var favourites = JSON.parse(localStorage.getItem("favourites")) || [];
                 const index = favourites.indexOf($scope.selectedStock.Symbol);
@@ -226,9 +229,17 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
         var max_volume = chartDataPrice.max_volume;
         var allDates = chartDataPrice.allDates;
 
+        var formattedDates = [];
+
+        for(var i = 0; i < allDates.length; i++) {
+
+            formattedDates.push(allDates[i].replace(/-/g, '\/').substring(5, allDates[i].length));
+
+        }
+
         Highcharts.chart('priceGraph', {
             chart: {
-                zoomType: 'xy',
+                zoomType: 'x',
                 borderColor: 'gray',
                 borderWidth: 1,
                 width: 575,
@@ -246,7 +257,7 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
             },
 
             xAxis: [{
-                categories: allDates,
+                categories: formattedDates,
                 crosshair: true,
                 tickInterval: 7,
                 labels: {
@@ -284,14 +295,6 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
                 },
                 opposite: true
             }],
-            // legend: {
-            //     layout: 'vertical',
-            //     align: 'bottom',
-            //     verticalAlign: 'top',
-            //     x: 0,
-            //     y: 200,
-            //     backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
-            // },
             plotOptions: {
                 series: {
                     marker: {
@@ -331,95 +334,95 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
     var graphType = 'graphAreaSMA';
 
     $scope.functionSelected = function(title){
+
         $http.get('/charts?', {params: {"function" : title, "symbol" : inputSymbol}})
             .then(function(response){
 
-            if(title === 'SMA') {
-                graphType = 'graphAreaSMA';
-            } else if(title === 'EMA') {
-                graphType = 'graphAreaEMA';
-            } else if(title === 'STOCH'){
-                graphType = 'graphAreaSTOCH';
-            } else if(title === 'RSI') {
-                graphType = 'graphAreaRSI';
-            } else if(title === 'ADX') {
-                graphType = 'graphAreaADX';
-            } else if(title === 'CCI') {
-                graphType = 'graphAreCCI';
-            } else if(title === 'BBANDS') {
-                graphType = 'graphAreaBBANDS';
-            } else if(title === 'MACD') {
-                graphType = 'graphAreaMACD';
-            }
-
-            console.log(response.data);
-
-            var data = response.data;
-            var values = data.values;
-            var dates = data.dates;
-
-            var formattedDates = [];
-
-            for(var i = 0; i < dates.length; i++) {
-
-                formattedDates.push(dates[i].replace(/-/g, '\/').substring(5, dates[i].length));
-
-            }
-
-            console.log('dates ', formattedDates);
-
-
-            var slowD = [];
-            var slowK = [];
-
-            var lowerBands = [];
-            var middleBands = [];
-            var upperBands = [];
-
-            var macdHist = [];
-            var macdSignal = [];
-            var macd = [];
-
-            if(title === 'STOCH') {
-                slowD = data.slowD;
-                slowK = data.slowK;
-
-                for(var i = 0; i < slowD.length; i++){
-                    slowD[i] = parseFloat(slowD[i], 10);
-                    slowK[i] = parseFloat(slowK[i], 10);
-                }
-            } else if(title === 'BBANDS'){
-
-                lowerBands = data.lowerBand;
-                middleBands = data.middleBand;
-                upperBands = data.upperBand;
-
-                for(var i = 0; i < lowerBands.length; i++){
-                    lowerBands[i] = parseFloat(lowerBands[i], 10);
-                    middleBands[i] = parseFloat(middleBands[i], 10);
-                    upperBands[i] = parseFloat(upperBands[i], 10);
+                if(title === 'SMA') {
+                    graphType = 'graphAreaSMA';
+                } else if(title === 'EMA') {
+                    graphType = 'graphAreaEMA';
+                } else if(title === 'STOCH'){
+                    graphType = 'graphAreaSTOCH';
+                } else if(title === 'RSI') {
+                    graphType = 'graphAreaRSI';
+                } else if(title === 'ADX') {
+                    graphType = 'graphAreaADX';
+                } else if(title === 'CCI') {
+                    graphType = 'graphAreCCI';
+                } else if(title === 'BBANDS') {
+                    graphType = 'graphAreaBBANDS';
+                } else if(title === 'MACD') {
+                    graphType = 'graphAreaMACD';
                 }
 
-            } else if(title === 'MACD') {
+                var data = response.data;
+                var values = data.values;
+                var dates = data.dates;
 
-                macdHist = data.macdHist;
-                macdSignal =  data.macdSignal;
-                macd =  data.macd;
+                var formattedDates = [];
 
-                for(var i  = 0;  i < macd.length; i++) {
-                    macdHist[i] = parseFloat(macdHist[i], 10);
-                    macdSignal[i] = parseFloat(macdSignal[i], 10);
-                    macd[i] = parseFloat(macd[i], 10);
+                for(var i = 0; i < dates.length; i++) {
+
+                    formattedDates.push(dates[i].replace(/-/g, '\/').substring(5, dates[i].length));
+
                 }
 
+                console.log('dates ', formattedDates);
 
-            } else {
 
-                for(var i = 0; i < values.length; i++) {
-                    values[i] = parseFloat(values[i], 10);
+                var slowD = [];
+                var slowK = [];
+
+                var lowerBands = [];
+                var middleBands = [];
+                var upperBands = [];
+
+                var macdHist = [];
+                var macdSignal = [];
+                var macd = [];
+
+                if(title === 'STOCH') {
+                    slowD = data.slowD;
+                    slowK = data.slowK;
+
+                    for(var i = 0; i < slowD.length; i++){
+                        slowD[i] = parseFloat(slowD[i], 10);
+                        slowK[i] = parseFloat(slowK[i], 10);
+                    }
+                } else if(title === 'BBANDS'){
+
+                    lowerBands = data.lowerBand;
+                    middleBands = data.middleBand;
+                    upperBands = data.upperBand;
+
+                    for(var i = 0; i < lowerBands.length; i++){
+                        lowerBands[i] = parseFloat(lowerBands[i], 10);
+                        middleBands[i] = parseFloat(middleBands[i], 10);
+                        upperBands[i] = parseFloat(upperBands[i], 10);
+                    }
+
+                } else if(title === 'MACD') {
+
+                    macdHist = data.macdHist;
+                    macdSignal =  data.macdSignal;
+                    macd =  data.macd;
+
+                    for(var i  = 0;  i < macd.length; i++) {
+                        macdHist[i] = parseFloat(macdHist[i], 10);
+                        macdSignal[i] = parseFloat(macdSignal[i], 10);
+                        macd[i] = parseFloat(macd[i], 10);
+                    }
+
+
+                } else {
+
+                    for(var i = 0; i < values.length; i++) {
+                        values[i] = parseFloat(values[i], 10);
+                    }
                 }
-            }
 
+                
 
             //Chart area:
 
@@ -428,6 +431,7 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
                 Highcharts.chart(graphType, {
 
                     chart: {
+                        zoomType: 'x',
                         borderColor: 'gray',
                         borderWidth: 1,
                         type: 'line',
@@ -461,12 +465,6 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
 
                         }
                     },
-                    //                    legend: {
-                    //                        layout: 'vertical',
-                    //                        align: 'right',
-                    //                        verticalAlign: 'middle'
-                    //                    },
-
                     plotOptions: {
                         series: {
                             label: {
@@ -511,6 +509,7 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
                 Highcharts.chart(graphType, {
 
                     chart: {
+                        zoomType: 'x',
                         borderColor: 'gray',
                         borderWidth: 1,
                         type: 'line',
@@ -544,11 +543,6 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
 
                         }
                     },
-                    //                    legend: {
-                    //                        layout: 'vertical',
-                    //                        align: 'right',
-                    //                        verticalAlign: 'middle'
-                    //                    },
 
                     plotOptions: {
                         series: {
@@ -596,6 +590,7 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
                 Highcharts.chart(graphType, {
 
                     chart: {
+                        zoomType: 'x',
                         borderColor: 'gray',
                         borderWidth: 1,
                         type: 'line',
@@ -629,12 +624,6 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
 
                         }
                     },
-                    //                    legend: {
-                    //                        layout: 'vertical',
-                    //                        align: 'right',
-                    //                        verticalAlign: 'middle'
-                    //                    },
-
                     plotOptions: {
                         series: {
                             marker: {
@@ -682,6 +671,7 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
                 Highcharts.chart(graphType, {
 
                     chart: {
+                        zoomType: 'x',
                         borderColor: 'gray',
                         borderWidth: 1,
                         type: 'line',
@@ -715,11 +705,6 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
 
                         }
                     },
-//                    legend: {
-//                        layout: 'vertical',
-//                        align: 'right',
-//                        verticalAlign: 'middle'
-//                    },
 
                     plotOptions: {
                         series: {
@@ -758,6 +743,9 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
 
             }
 
+
+
+
         });
     }
 
@@ -777,20 +765,18 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
                 timestamp.push(historicTimestamp[i][1] + "/" + historicTimestamp[i][2] + "/" + historicTimestamp[i][0]);
                 timestamp[i] = new Date(timestamp[i]).getTime();
 
-                timestamp = timestamp.sort();
-                historicPrices = historicPrices.sort();
-
                 data.push([timestamp[i], historicPrices[i]]);
             }
 
-            //console.log(timestamp);
-            //console.log(historicPrices);
             console.log(data);
 
 
 
             Highcharts.stockChart('historicChartsDiv', {
 
+                chart: {
+                    type: 'area',
+                },
 
                 rangeSelector: {
                     selected: 1

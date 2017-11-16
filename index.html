@@ -44,42 +44,78 @@
         <!--Controller -->
         <script src="controllers/controller.js"></script>
 
+        <!--  Animate -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
+
         <!-- High Charts -->
         <script src="https://code.highcharts.com/stock/highstock.js"></script>
         <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
         <script src="https://code.highcharts.com/highcharts-more.js"></script>
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
         <script src="https://code.highcharts.com/stock/indicators/indicators.js"></script>
+        
+
+        <!--  JQuery  -->
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#contact_form').bootstrapValidator({
+                    // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
+                    feedbackIcons: {
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields: {
+                        first_name: {
+                            validators: {
+                                stringLength: {
+                                    min: 2,
+                                },
+                                notEmpty: {
+                                    message: 'Please supply your first name'
+                                }
+                            }
+                        }
+                    }
+                })
+            });
+
+        </script>
     </head>
 
     <body ng-app="myApp" ng-controller="searchSymbolController as vm" ng-style="{'background-image':'url(http://cs-server.usc.edu:45678/hw/hw8/images/background.png)'}">
-        <div class="row">
-            <div id="containerOne">
-                <div class="container containerInside">
-                    </br>
-                <div class="row" layout="row" layout-align="center center">
-                    <p id="stockTitle">Stock Market Search</p>
-                </div>
+
+        <form id="contact_form">
+            <fieldset>
                 <div class="row">
-                    <div id="required" class="col-md-3">
-                        <label id="tickerTitle">Enter Stock Ticker Symbol:</label>
-                    </div>
-                    <div class="col-md-5">
-                        <input type="text" class="form-control" ng-model="vm.inputSymbol" placeholder="e.g. AAPL" auto-complete="vm.autoCompleteOptions"
-                               />
-                    </div>
-                    <div class="col-md-4">
-                        <button type="button" id="getQuote" class="btn btn-primary" ng-click="getQuote()" ng-disabled="getQuoteDisabled">
-                            <i class="fa fa-search" aria-hidden="true"><font face = "arial">  Get Quote</font></i>
-                        </button>
-                        <button type="button" id="clearBtn" class="btn" ng-click="clear()">
-                            <i class="fa fa-refresh" aria-hidden="true"><font face = "arial"> Clear</font></i>
-                        </button>
+                    <div id="containerOne">
+                        <div class="container containerInside">
+                            </br>
+                        <div class="row" layout="row" layout-align="center center">
+                            <p id="stockTitle">Stock Market Search</p>
+                        </div>
+                        <div class="row">
+                            <div id="required" class="col-md-3">
+                                <label id="tickerTitle">Enter Stock Ticker Symbol:</label>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="vm.inputSymbol" placeholder="e.g. AAPL" auto-complete="vm.autoCompleteOptions" required oninvalid="this.setCustomValidity('This cant be left empty')" onchange="this.setCustomValidity('')"/>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" id="getQuote" class="btn btn-primary" ng-click="getQuote()" ng-disabled="getQuoteDisabled">
+                                    <i class="fa fa-search" aria-hidden="true"><font face = "arial">  Get Quote</font></i>
+                                </button>
+                                <button type="button" id="clearBtn" class="btn" ng-click="clear()">
+                                    <i class="fa fa-refresh" aria-hidden="true"><font face = "arial"> Clear</font></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        </div>
+                </div>
+            </fieldset>
+        </form>
     <hr id = "horizontalLine">
     <div class="row">
         <div id="containerTwo" class="container" layout-align="center center" ng-hide = "containerTwo">
@@ -129,9 +165,9 @@
                                 <th></th>
                             </tr>
                             <tr ng-repeat="x in favouriteStocks">
-                                <td>{{ x.Symbol }}</td>
-                                <td>{{ x.LastPrice }}</td>
-                                <td>
+                                <td ng-class-odd="'odd'" ng-class-even="'even'">{{ x.Symbol }}</td>
+                                <td ng-class-odd="'odd'" ng-class-even="'even'">{{ x.LastPrice }}</td>
+                                <td ng-class-odd="'odd'" ng-class-even="'even'">
                                     <div ng-show="(x.Change > 0)" style="color:green;">
                                         {{ getChangePercent(x) }}
                                         <img id = "arrow" src = "http://cs-server.usc.edu:45678/hw/hw6/images/Green_Arrow_Up.png"/>
@@ -144,8 +180,8 @@
                                         0 ( 0.00% )
                                     </div>
                                 </td>
-                                <td>{{ x.Volume }}</td>
-                                <td>
+                                <td ng-class-odd="'odd'" ng-class-even="'even'">{{ x.Volume }}</td>
+                                <td ng-class-odd="'odd'" ng-class-even="'even'">
                                     <i id = "deleteBorder" class="fa fa-trash-o handcursor" aria-hidden="true" ng-click="deleteFavourite(x.Symbol)"></i>
                                 </td>
                             </tr>
@@ -201,16 +237,16 @@
                                     <br/>
                                     <table class="selectedStockTable">
                                         <tr class="selectedStockTable">
-                                            <td><b>Stock Ticker Symbol</b></td>
-                                            <td>{{selectedStock.Symbol}}</td>
+                                            <td class = "oddClass"><b>Stock Ticker Symbol</b></td>
+                                            <td class = "oddClass">{{selectedStock.Symbol}}</td>
                                         </tr>
                                         <tr class="selectedStockTable">
                                             <td><b>Last Price</b></td>
                                             <td>{{selectedStock.LastPrice}}</td>
                                         </tr>
                                         <tr class="selectedStockTable">
-                                            <td><b>Change (Change Percent)</b></td>
-                                            <td>
+                                            <td class = "oddClass"><b>Change (Change Percent)</b></td>
+                                            <td class = "oddClass">
                                                 <div ng-show="(selectedStock.Change > 0)" style="color:green;">
                                                     {{ getChangePercent(selectedStock) }}
                                                     <img id = "arrow" src = "http://cs-server.usc.edu:45678/hw/hw6/images/Green_Arrow_Up.png"/>
@@ -229,16 +265,16 @@
                                             <td>{{selectedStock.Timestamp}}</td>
                                         </tr>
                                         <tr class="selectedStockTable">
-                                            <td><b>Open</b></td>
-                                            <td>{{selectedStock.Open}}</td>
+                                            <td class = "oddClass"><b>Open</b></td>
+                                            <td class = "oddClass">{{selectedStock.Open}}</td>
                                         </tr>
                                         <tr class="selectedStockTable">
                                             <td><b>Close</b></td>
                                             <td>{{selectedStock.Close}}</td>
                                         </tr>
                                         <tr class="selectedStockTable">
-                                            <td><b>Day's Range</b></td>
-                                            <td>{{selectedStock.DaysRange}}</td>
+                                            <td class = "oddClass"><b>Day's Range</b></td>
+                                            <td class = "oddClass">{{selectedStock.DaysRange}}</td>
                                         </tr>
                                         <tr class="selectedStockTable">
                                             <td><b>Volume</b></td>

@@ -41,7 +41,7 @@
     left: 50%;
     transform: translate(-50%,-50%);
     margin-top: 10%;
-     height: 60%; 
+    height: 60%; 
 }
 
 .containerThree {
@@ -57,7 +57,7 @@
     width: 100%;
     border-radius: 5px;
     margin-top: -21%;
-/*    margin-top: 2%;*/
+    /*    margin-top: 2%;*/
 }
 
 .containerFav {
@@ -170,6 +170,13 @@ td, th {
 
 tr {
     border-top: thin solid #dddddd;
+}
+
+.odd {
+    background-color: #FFF;
+}
+.even, .oddClass {
+    background-color: #f9f9f9;
 }
 
 .handcursor {
