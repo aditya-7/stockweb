@@ -190,23 +190,50 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
 
     // To share stock details on Facebook    
     $scope.shareOnFacebook = function () {
-        var svg =  chart.getSVG();
-        FB.ui({
-            method: 'feed',
-            name: 'Highcharts',
-            link: 'https://developers.facebook.com/docs/dialogs/',
-            picture: 'www.google.com',
-            caption: 'Reference Documentation',
-            description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
-        }, (response) => {
-            if (response && !response.error_message) {
-                //succeed
-                alert('Posting completed.');
-            } else {
-                //fail
-                alert('Error while posting.');
+
+        var EXPORT_WIDTH = 1000;
+
+        // function save_chart(chart, filename) {
+        var filename = "img";
+        var render_width = EXPORT_WIDTH;
+        var render_height = render_width * chart.chartHeight / chart.chartWidth
+
+        var svg = chart.getSVG({
+            exporting: {
+                sourceWidth: chart.chartWidth,
+                sourceHeight: chart.chartHeight
             }
         });
+
+        var canvas = document.createElement('canvas');
+        canvas.height = render_height;
+        canvas.width = render_width;
+
+        var image = new Image;
+        image.onload = function () {
+            // canvas.getContext('2d').drawImage(this, 0, 0, render_width, render_height);
+            // var data = canvas.toDataURL("image/png")
+            FB.ui({
+                method: 'feed',
+                name: 'Highcharts',
+                link: 'https://developers.facebook.com/docs/dialogs/',
+                picture: image,
+                caption: 'Reference Documentation',
+                description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
+            }, (response) => {
+                if (response && !response.error_message) {
+                    //succeed
+                    alert('Posting completed.');
+                } else {
+                    //fail
+                    alert('Error while posting.');
+                }
+            });
+
+        };
+        image.src = 'data:image/svg+xml;base64,' + window.btoa(svg);
+        // }
+
 
     };
 

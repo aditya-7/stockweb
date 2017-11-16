@@ -3,6 +3,9 @@ var express = require('express'),
     app = express();
 var request = require('request');
 var parseString = require('xml2js').parseString;
+var bodyParser = require('body-parser');
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 const ALPHA_VANTAGE_API_KEY = "5M9YGPO0TT8VGN1Z";
 
@@ -25,7 +28,7 @@ app.get('/quote', function (req, res) {
         table: {},    // Store data structure for table in this key
         chart: {},     // Store data structure for charts in this key 
         historicPrice: {},
-        historicTimestamp : {}
+        historicTimestamp: {}
     };
     request(url, function (error, response, body) {
         try {
@@ -59,11 +62,11 @@ app.get('/quote', function (req, res) {
             var min_price = allStockDates.length > 0 ? (body['Time Series (Daily)'][allStockDates[0]]['4. close']) : 0;
             var max_price = 0;
             var max_volume = 0;
-            
-            for(var i = 0; i < allHistoricDates.length; i++) {
+
+            for (var i = 0; i < allHistoricDates.length; i++) {
                 historicPrice.push(body['Time Series (Daily)'][allHistoricDates[i]]['4. close']);
             }
-        
+
 
             for (var i = 0; i < allStockDates.length; i++) {
                 priceValues.push(body['Time Series (Daily)'][allStockDates[i]]['4. close']);
@@ -83,10 +86,10 @@ app.get('/quote', function (req, res) {
             stock.chart["min_price"] = min_price;
             stock.chart["max_price"] = max_price;
             stock.chart["max_volume"] = max_volume;
-            
+
             stock.historicPrice = historicPrice;
             stock.historicTimestamp = allHistoricDates;
-            
+
             res.send(stock);
 
         } catch (e) {
@@ -156,45 +159,45 @@ app.get('/charts', function (req, res) {
 
     var url = "";
 
-    if(req.query.function == 'STOCH'){
+    if (req.query.function == 'STOCH') {
 
-        url  = "https://www.alphavantage.co/query?function=STOCH&symbol=" + req.query.symbol + "&interval=daily&slowkmatype=1&slowdmatype=1&apikey=7VDD3ZWMAFBQZD4B";
+        url = "https://www.alphavantage.co/query?function=STOCH&symbol=" + req.query.symbol + "&interval=daily&slowkmatype=1&slowdmatype=1&apikey=7VDD3ZWMAFBQZD4B";
 
-    } else if(req.query.function == 'BBANDS') {
+    } else if (req.query.function == 'BBANDS') {
 
-        url =  "https://www.alphavantage.co/query?function=BBANDS&symbol=" + req.query.symbol + "&interval=daily&time_period=5&series_type=close&nbdevup=3&nbdevdn=3&apikey=7VDD3ZWMAFBQZD4B";
+        url = "https://www.alphavantage.co/query?function=BBANDS&symbol=" + req.query.symbol + "&interval=daily&time_period=5&series_type=close&nbdevup=3&nbdevdn=3&apikey=7VDD3ZWMAFBQZD4B";
     } else {
         url = "https://www.alphavantage.co/query?function=" + req.query.function + "&symbol=" + req.query.symbol + "&interval=daily&time_period=10&series_type=close&apikey=7VDD3ZWMAFBQZD4B";
     }
 
 
     var stock = {
-        names : {},
+        names: {},
         dates: {},    // Store data structure for table in this key
         values: {}     // Store data structure for charts in this key 
     };
 
     var stockForSTOCH = {
-        names : {},
+        names: {},
         dates: {},
         slowD: {},
         slowK: {}
     };
 
     var stockForBBANDS = {
-        names : {},
+        names: {},
         dates: {},
         middleBand: {},
         upperBand: {},
         lowerBand: {}
     }
-    
+
     var stockForMACD = {
-        names : {},
-        dates : {},
-        macdHist : {},
-        macdSignal : {},
-        macd : {}
+        names: {},
+        dates: {},
+        macdHist: {},
+        macdSignal: {},
+        macd: {}
     }
 
     request(url, function (error, response, body) {
@@ -218,18 +221,18 @@ app.get('/charts', function (req, res) {
             var middleBand = [];
             var upperBand = [];
             var lowerBand = [];
-            
+
             var macdHist = [];
             var macdSignal = [];
             var macd = [];
-                
 
 
-            for(var i = 0; i < allDates.length; i++) {
+
+            for (var i = 0; i < allDates.length; i++) {
 
                 functionChosen.push(Object.keys(body[techAnalysis][allDates[i]]));
 
-                if(req.query.function === 'STOCH'){
+                if (req.query.function === 'STOCH') {
                     SlowD.push(body[techAnalysis][allDates[i]][functionChosen[i][0]]);
                     SlowK.push(body[techAnalysis][allDates[i]][functionChosen[i][1]]);
 
@@ -239,7 +242,7 @@ app.get('/charts', function (req, res) {
                     stockForSTOCH.slowK = SlowK;
 
 
-                } else if(req.query.function  === 'BBANDS') {
+                } else if (req.query.function === 'BBANDS') {
                     middleBand.push(body[techAnalysis][allDates[i]][functionChosen[i][0]]);
                     upperBand.push(body[techAnalysis][allDates[i]][functionChosen[i][1]]);
                     lowerBand.push(body[techAnalysis][allDates[i]][functionChosen[i][2]]);
@@ -250,12 +253,12 @@ app.get('/charts', function (req, res) {
                     stockForBBANDS.upperBand = upperBand;
                     stockForBBANDS.lowerBand = lowerBand;
 
-                } else if(req.query.function === 'MACD'){
-                    
+                } else if (req.query.function === 'MACD') {
+
                     macdHist.push(body[techAnalysis][allDates[i]][functionChosen[i][0]]);
                     macdSignal.push(body[techAnalysis][allDates[i]][functionChosen[i][1]]);
                     macd.push(body[techAnalysis][allDates[i]][functionChosen[i][2]]);
-                    
+
                     stockForMACD.names = indicator;
                     stockForMACD.dates = allDates;
                     stockForMACD.macdHist = macdHist;
@@ -269,24 +272,32 @@ app.get('/charts', function (req, res) {
                     stock.values = technicalValues;
                 }
 
-                }
-
-                if(req.query.function === 'STOCH') {
-                    res.send(stockForSTOCH);
-                } else if(req.query.function === 'BBANDS') {
-                    res.send(stockForBBANDS);
-                } else if(req.query.function === 'MACD') {
-                    res.send(stockForMACD);
-                } else {
-                    res.send(stock);
-                }
-
-            } catch (e) {
-                console.log(e); // error in the above string (in this case, yes)!
             }
-        });
-    });
 
-    app.listen(port, function () {
-        console.log('Server running at http://localhost:' + port + '/');
+            if (req.query.function === 'STOCH') {
+                res.send(stockForSTOCH);
+            } else if (req.query.function === 'BBANDS') {
+                res.send(stockForBBANDS);
+            } else if (req.query.function === 'MACD') {
+                res.send(stockForMACD);
+            } else {
+                res.send(stock);
+            }
+
+        } catch (e) {
+            console.log(e); // error in the above string (in this case, yes)!
+        }
     });
+});
+
+var gm = require('gm');
+
+app.post('/uploadChart', function (req, res) {
+    var svg = req.body.svg;
+    console.log("svg: ", svg);
+    res.send("done");
+});
+
+app.listen(port, function () {
+    console.log('Server running at http://localhost:' + port + '/');
+});
