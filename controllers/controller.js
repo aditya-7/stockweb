@@ -195,7 +195,7 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
             method: 'feed',
             name: 'Highcharts',
             link: 'https://developers.facebook.com/docs/dialogs/',
-            picture: svg,
+            picture: 'www.google.com',
             caption: 'Reference Documentation',
             description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
         }, (response) => {
