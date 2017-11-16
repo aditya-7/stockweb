@@ -1,95 +1,94 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- Stylesheets -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-              crossorigin="anonymous">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-              crossorigin="anonymous">
-        <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
-        <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="css/autocomplete.css">
-        <link rel="stylesheet" href="css/style.css">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/autocomplete.css">
+    <link rel="stylesheet" href="css/style.css">
 
-        <!-- AngularJS -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-sanitize.min.js"></script>
+    <!-- AngularJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-sanitize.min.js"></script>
 
-        <!-- Jquery and Bootstrap-->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-                crossorigin="anonymous"></script>
-        <script src="lib/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <!-- Jquery and Bootstrap-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <script src="lib/ui-bootstrap-tpls-2.5.0.min.js"></script>
 
-        <!-- For autocomplete -->
-        <script src="lib/autocomplete.js"></script>
+    <!-- For autocomplete -->
+    <script src="lib/autocomplete.js"></script>
 
-        <!-- For toggle button -->
-        <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <!-- For toggle button -->
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
-        <!-- Other libraries -->
-        <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js" type="text/javascript"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" type="text/javascript"></script>
+    <!-- Other libraries -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" type="text/javascript"></script>
 
-        <!-- For progress bar -->
-        <script src="lib/ngprogress.min.js"></script>
+    <!-- For progress bar -->
+    <script src="lib/ngprogress.min.js"></script>
 
-        <!-- For Facebook API -->
-<!--        <script src = "http://connect.facebook.net/en_US/all.js"></script> -->
+    <!-- For Facebook API -->
+    <!--        <script src = "http://connect.facebook.net/en_US/all.js"></script> -->
 
-        <!--Controller -->
-        <script src="controllers/controller.js"></script>
+    <!--Controller -->
+    <script src="controllers/controller.js"></script>
 
-        <!--  Animate -->
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
+    <!--  Animate -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
 
-        <!-- High Charts -->
-        <script src="https://code.highcharts.com/stock/highstock.js"></script>
-        <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
-        <script src="https://code.highcharts.com/highcharts-more.js"></script>
-        <script src="https://code.highcharts.com/modules/exporting.js"></script>
-        <script src="https://code.highcharts.com/stock/indicators/indicators.js"></script>
-        
+    <!-- High Charts -->
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/stock/indicators/indicators.js"></script>
 
-        <!--  JQuery  -->
-        <script src = "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.js"></script>
-        <script>
-            $(document).ready(function() {
-                $('#contact_form').bootstrapValidator({
-                    // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
-                    feedbackIcons: {
-                        validating: 'glyphicon glyphicon-refresh'
-                    },
-                    fields: {
-                        first_name: {
-                            validators: {
-                                stringLength: {
-                                    min: 2,
-                                },
-                                notEmpty: {
-                                    message: 'Please supply your first name'
-                                }
+
+    <!--  JQuery  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#contact_form').bootstrapValidator({
+                // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
+                feedbackIcons: {
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    first_name: {
+                        validators: {
+                            stringLength: {
+                                min: 2,
+                            },
+                            notEmpty: {
+                                message: 'Please supply your first name'
                             }
                         }
                     }
-                })
-            });
+                }
+            })
+        });
+    </script>
+</head>
 
-        </script>
-    </head>
+<body ng-app="myApp" ng-controller="searchSymbolController as vm" ng-style="{'background-image':'url(http://cs-server.usc.edu:45678/hw/hw8/images/background.png)'}">
 
-    <body ng-app="myApp" ng-controller="searchSymbolController as vm" ng-style="{'background-image':'url(http://cs-server.usc.edu:45678/hw/hw8/images/background.png)'}">
-
-        <form id="contact_form">
-            <fieldset>
-                <div class="row">
-                    <div id="containerOne">
-                        <div class="container containerInside">
-                            </br>
+    <form id="contact_form">
+        <fieldset>
+            <div class="row">
+                <div id="containerOne">
+                    <div class="container containerInside">
+                        </br>
                         <div class="row" layout="row" layout-align="center center">
                             <p id="stockTitle">Stock Market Search</p>
                         </div>
@@ -99,7 +98,9 @@
                             </div>
                             <div class="col-md-5">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" ng-model="vm.inputSymbol" placeholder="e.g. AAPL" auto-complete="vm.autoCompleteOptions" required oninvalid="this.setCustomValidity('This cant be left empty')" onchange="this.setCustomValidity('')"/>
+                                    <input type="text" class="form-control" ng-model="vm.inputSymbol" placeholder="e.g. AAPL" auto-complete="vm.autoCompleteOptions"
+                                        required oninvalid="this.setCustomValidity('This cant be left empty')" onchange="this.setCustomValidity('')"
+                                    />
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -113,12 +114,12 @@
                         </div>
                     </div>
                 </div>
-                </div>
-            </fieldset>
-        </form>
-    <hr id = "horizontalLine">
+            </div>
+        </fieldset>
+    </form>
+    <hr id="horizontalLine">
     <div class="row">
-        <div id="containerTwo" class="container" layout-align="center center" ng-hide = "containerTwo">
+        <div id="containerTwo" class="container" layout-align="center center" ng-hide="containerTwo">
             <!-- Favourite stocks template -->
             <div class="container containerThree" ng-show="containsFavList">
                 <br/>
@@ -127,13 +128,13 @@
                         <b>Favourite List</b>
                     </div>
                     <div class="col-sm-4"></div>
-                    <div id = "autoRefresh" class="col-sm-6">
+                    <div id="autoRefresh" class="col-sm-6">
                         <p>&nbsp;&nbsp;Automatic Refresh &nbsp;&nbsp;
                             <input type="checkbox" data-toggle="toggle" id="toggle-event"> &nbsp;
                             <button class="btn btn-default" ng-click="updateFavouriteStocks()">
                                 &nbsp;<i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;
                             </button>
-                            <button class="btn btn-default" ng-click="containsFavList=false; showSearch();" ng-disabled = "right_chevron">
+                            <button class="btn btn-default" ng-click="containsFavList=false; showSearch();" ng-disabled="right_chevron">
                                 &nbsp;<i class="fa fa-chevron-right" aria-hidden="true"></i>&nbsp;
                             </button>
                         </p>
@@ -170,11 +171,11 @@
                                 <td ng-class-odd="'odd'" ng-class-even="'even'">
                                     <div ng-show="(x.Change > 0)" style="color:green;">
                                         {{ getChangePercent(x) }}
-                                        <img id = "arrow" src = "http://cs-server.usc.edu:45678/hw/hw6/images/Green_Arrow_Up.png"/>
+                                        <img id="arrow" src="http://cs-server.usc.edu:45678/hw/hw6/images/Green_Arrow_Up.png" />
                                     </div>
                                     <div ng-hide="(x.Change >= 0)" style="color:red;">
                                         {{ getChangePercent(x) }}
-                                        <img id = "arrow" src = "http://cs-server.usc.edu:45678/hw/hw6/images/Red_Arrow_Down.png"/>
+                                        <img id="arrow" src="http://cs-server.usc.edu:45678/hw/hw6/images/Red_Arrow_Down.png" />
                                     </div>
                                     <div ng-show="(x.Change == 0)" style="color:green;">
                                         0 ( 0.00% )
@@ -182,7 +183,7 @@
                                 </td>
                                 <td ng-class-odd="'odd'" ng-class-even="'even'">{{ x.Volume }}</td>
                                 <td ng-class-odd="'odd'" ng-class-even="'even'">
-                                    <i id = "deleteBorder" class="fa fa-trash-o handcursor" aria-hidden="true" ng-click="deleteFavourite(x.Symbol)"></i>
+                                    <i id="deleteBorder" class="fa fa-trash-o handcursor" aria-hidden="true" ng-click="deleteFavourite(x.Symbol)"></i>
                                 </td>
                             </tr>
                         </table>
@@ -192,212 +193,213 @@
         </div>
 
         <!-- Stock search template -->
-        <div id="containerForStockDetails" ng-hide = "showSearchDiv">
+        <div id="containerForStockDetails" ng-hide="showSearchDiv">
             <div id="containerSearch" class="container" layout-align="center center">
                 <div class="container containerFour" ng-hide="containsFavList">
                     </br>
-                <div class="row">
-                    <div class="row containerSearch">
-                        <div class="col-sm-2">
-                            <button id = "chevron-left" class="btn btn-default" ng-click="containsFavList=true; hideSearch();">
+                    <div class="row">
+                        <div class="row containerSearch">
+                            <div class="col-sm-2">
+                                <button id="chevron-left" class="btn btn-default" ng-click="containsFavList=true; hideSearch();">
                                 &nbsp;<i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp;
                             </button>
-                        </div>
-                        <div class="col-sm-10">
-                            <b>Stock Details</b>
-                        </div>
-                    </div>
-                </div>
-                </br>
-            <uib-tabset active="activePill" vertical="false" type="pills">
-                <uib-tab index="0">
-                    <uib-tab-heading><i class="fa fa-tachometer" aria-hidden="true"><font face = "Arial"> Current Stock</font></i></uib-tab-heading>
-                    <div class="row" style="height: 500px;">
-                        <br/>
-                        <div class="col-md-5">
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    <b>Stock Details</b>
-                                </div>
-                                <div class="col-sm-2">
-                                    <img src="images/favourite.png" class="handcursor imgborder favmargin" ng-show="isFavourite" ng-disabled="!isEnabled" ng-click="!isEnabled || deleteFavourite()"
-                                         />
-                                    <img src="images/not-favourite.png" class="handcursor imgborder favmargin" ng-hide="isFavourite" ng-hide="isFavourite" ng-disabled="!isEnabled"
-                                         ng-click="!isEnabled || addToFavourites()" />
-                                </div>
-                                <div class="col-sm-2">
-                                    <img src="images/facebook.png" class="handcursor imgborder" ng-disabled="!isEnabled" ng-click="!isEnabled || shareOnFacebook()"
-                                         />
-                                </div>
-                            </div><br/>
-
-                            <div ng-show="currentStockDataReceived">
-
-                                <div class="row">
-                                    <br/>
-                                    <table class="selectedStockTable">
-                                        <tr class="selectedStockTable">
-                                            <td class = "oddClass"><b>Stock Ticker Symbol</b></td>
-                                            <td class = "oddClass">{{selectedStock.Symbol}}</td>
-                                        </tr>
-                                        <tr class="selectedStockTable">
-                                            <td><b>Last Price</b></td>
-                                            <td>{{selectedStock.LastPrice}}</td>
-                                        </tr>
-                                        <tr class="selectedStockTable">
-                                            <td class = "oddClass"><b>Change (Change Percent)</b></td>
-                                            <td class = "oddClass">
-                                                <div ng-show="(selectedStock.Change > 0)" style="color:green;">
-                                                    {{ getChangePercent(selectedStock) }}
-                                                    <img id = "arrow" src = "http://cs-server.usc.edu:45678/hw/hw6/images/Green_Arrow_Up.png"/>
-                                                </div>
-                                                <div ng-hide="!selectedStock || (selectedStock.Change >= 0)" style="color:red;">
-                                                    {{ getChangePercent(selectedStock) }}
-                                                    <img id = "arrow" src = "http://cs-server.usc.edu:45678/hw/hw6/images/Red_Arrow_Down.png"/>
-                                                </div>
-                                                <div ng-show="(selectedStock.Change == 0)" style="color:green;">
-                                                    0 ( 0.00% )
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="selectedStockTable">
-                                            <td><b>Timestamp</b></td>
-                                            <td>{{selectedStock.Timestamp}}</td>
-                                        </tr>
-                                        <tr class="selectedStockTable">
-                                            <td class = "oddClass"><b>Open</b></td>
-                                            <td class = "oddClass">{{selectedStock.Open}}</td>
-                                        </tr>
-                                        <tr class="selectedStockTable">
-                                            <td><b>Close</b></td>
-                                            <td>{{selectedStock.Close}}</td>
-                                        </tr>
-                                        <tr class="selectedStockTable">
-                                            <td class = "oddClass"><b>Day's Range</b></td>
-                                            <td class = "oddClass">{{selectedStock.DaysRange}}</td>
-                                        </tr>
-                                        <tr class="selectedStockTable">
-                                            <td><b>Volume</b></td>
-                                            <td>{{selectedStock.Volume}}</td>
-                                        </tr>
-                                    </table>
-                                </div>
                             </div>
-                            <div ng-hide="currentStockDataReceived" style="margin-top:50%;">
-                                <uib-progressbar class="progress-striped active" animate="true" max="100" value="currentStockProgressvalue" style="width:100%"
-                                                 type="info" type="success">
-                                </uib-progressbar>
+                            <div class="col-sm-10">
+                                <b>Stock Details</b>
                             </div>
                         </div>
-                        <div class="col-md-7">
-                            <form name="outerForm" class="tab-form-demo">
-                                <uib-tabset active="activeForm">
-                                    <uib-tab index="0" heading="Price" select="priceSelected()">
-                                        <div ng-show="currentStockDataReceived" id="priceGraph"></div>
-                                        <div ng-hide="currentStockDataReceived" style="margin-top:28%;">
-                                            <uib-progressbar class="progress-striped active" animate="true" max="100" value="currentStockProgressvalue" style="width:100%"
-                                                             type="info" type="success">
-                                            </uib-progressbar>
-                                        </div>
-                                    </uib-tab>
-                                    <uib-tab index="1" heading="SMA" select = "functionSelected('SMA')">
-                                        <div ng-show="currentStockDataReceived" id="graphAreaSMA"></div>
-                                        <div ng-hide="currentStockDataReceived" style="margin-top:28%;">
-                                            <uib-progressbar class="progress-striped active" animate="true" max="100" value="currentStockProgressvalue" style="width:100%"
-                                                             type="info" type="success">
-                                            </uib-progressbar>
-                                        </div>
-                                    </uib-tab>
-                                    <uib-tab index="2" heading="EMA" select = "functionSelected('EMA')">
-                                        <div ng-show="currentStockDataReceived" id = "graphAreaEMA"></div>
-                                        <div ng-hide="currentStockDataReceived" style="margin-top:28%;">
-                                            <uib-progressbar class="progress-striped active" animate="true" max="100" value="currentStockProgressvalue" style="width:100%"
-                                                             type="info" type="success">
-                                            </uib-progressbar>
-                                        </div>
-                                    </uib-tab>
-                                    <uib-tab index="3" heading="STOCH" select = "functionSelected('STOCH')">
-                                        <div ng-show="currentStockDataReceived" id="graphAreaSTOCH"></div>
-                                        <div ng-hide="currentStockDataReceived" style="margin-top:28%;">
-                                            <uib-progressbar class="progress-striped active" animate="true" max="100" value="currentStockProgressvalue" style="width:100%"
-                                                             type="info" type="success">
-                                            </uib-progressbar>
-                                        </div>
-                                    </uib-tab>
-                                    <uib-tab index="4" heading="RSI" select = "functionSelected('RSI')">
-                                        <div ng-show="currentStockDataReceived" id="graphAreaRSI"></div>
-                                        <div ng-hide="currentStockDataReceived" style="margin-top:28%;">
-                                            <uib-progressbar class="progress-striped active" animate="true" max="100" value="currentStockProgressvalue" style="width:100%"
-                                                             type="info" type="success">
-                                            </uib-progressbar>
-                                        </div>
-                                    </uib-tab>
-                                    <uib-tab index="5" heading="ADX" select = "functionSelected('ADX')">
-                                        <div ng-show="currentStockDataReceived" id="graphAreaADX"></div>
-                                        <div ng-hide="currentStockDataReceived" style="margin-top:28%;">
-                                            <uib-progressbar class="progress-striped active" animate="true" max="100" value="currentStockProgressvalue" style="width:100%"
-                                                             type="info" type="success">
-                                            </uib-progressbar>
-                                        </div>
-                                    </uib-tab>
-                                    <uib-tab index="6" heading="CCI" select = "functionSelected('CCI')">
-                                        <div ng-show="currentStockDataReceived" id="graphAreaCCI"></div>
-                                        <div ng-hide="currentStockDataReceived" style="margin-top:28%;">
-                                            <uib-progressbar class="progress-striped active" animate="true" max="100" value="currentStockProgressvalue" style="width:100%"
-                                                             type="info" type="success">
-                                            </uib-progressbar>
-                                        </div>
-                                    </uib-tab>
-                                    <uib-tab index="7" heading="BBANDS" select = "functionSelected('BBANDS')">
-                                        <div ng-show="currentStockDataReceived" id="graphAreaBBANDS"></div>
-                                        <div ng-hide="currentStockDataReceived" style="margin-top:28%;">
-                                            <uib-progressbar class="progress-striped active" animate="true" max="100" value="currentStockProgressvalue" style="width:100%"
-                                                             type="info" type="success">
-                                            </uib-progressbar>
-                                        </div>
-                                    </uib-tab>
-                                    <uib-tab index="8" heading="MACD" select = "functionSelected('MACD')">
-                                        <div ng-show="currentStockDataReceived" id="graphAreaMACD"></div>
-                                        <div ng-hide="currentStockDataReceived" style="margin-top:28%;">
-                                            <uib-progressbar class="progress-striped active" animate="true" max="100" value="currentStockProgressvalue" style="width:100%"
-                                                             type="info" type="success">
-                                            </uib-progressbar>
-                                        </div>
-                                    </uib-tab>
-                                </uib-tabset>
-                            </form>
-                        </div>
                     </div>
-                </uib-tab>
-                <uib-tab index="1" select = "historicCharts()">
-                    <uib-tab-heading><i class="fa fa-bar-chart" aria-hidden="true"><font face = "Arial"> Historical Charts</font></i>
-                    </uib-tab-heading>
-                    <div style="height: 500px;" id = "historicChartsDiv">
-                    </div>
-                </uib-tab>
-                <uib-tab index="2" select="newsTabClicked()">
-                    <uib-tab-heading><i class="fa fa-link" aria-hidden="true"><font face = "Arial"> News Feeds</font></i>
-                    </uib-tab-heading>
-                    <div style="height: 500px;overflow-y: auto;">
-                        <br/>
-                        <div ng-repeat="feed in newsfeeds track by $index">
-                            <div id = "newsFeed">
-                                <h4 style="color:#337AB7">&nbsp;&nbsp;&nbsp;{{feed.title}}</h4>
-                                <b> &nbsp;&nbsp;&nbsp;Author: {{feed.author}} </b><br/>
-                                <b> &nbsp;&nbsp;&nbsp;Date: {{feed.date}} </b>
-                                <br/><br/></br>
-                        </div>
-                        </br>
-                    </div>
+                    </br>
+                    <uib-tabset active="activePill" vertical="false" type="pills">
+                        <uib-tab index="0">
+                            <uib-tab-heading><i class="fa fa-tachometer" aria-hidden="true"><font face = "Arial"> Current Stock</font></i></uib-tab-heading>
+                            <div class="row" style="height: 500px;">
+                                <br/>
+                                <div class="col-md-5">
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <b>Stock Details</b>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <img src="images/favourite.png" class="handcursor imgborder favmargin" ng-show="isFavourite" ng-disabled="!isEnabled" ng-click="!isEnabled || deleteFavourite()"
+                                            />
+                                            <img src="images/not-favourite.png" class="handcursor imgborder favmargin" ng-hide="isFavourite" ng-hide="isFavourite" ng-disabled="!isEnabled"
+                                                ng-click="!isEnabled || addToFavourites()" />
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <img src="images/facebook.png" class="handcursor imgborder" ng-disabled="!isEnabled" ng-click="!isEnabled || shareOnFacebook()"
+                                            />
+                                        </div>
+                                    </div><br/>
+
+                                    <div ng-show="currentStockDataReceived">
+
+                                        <div class="row">
+                                            <br/>
+                                            <table class="selectedStockTable">
+                                                <tr class="selectedStockTable">
+                                                    <td class="oddClass"><b>Stock Ticker Symbol</b></td>
+                                                    <td class="oddClass">{{selectedStock.Symbol}}</td>
+                                                </tr>
+                                                <tr class="selectedStockTable">
+                                                    <td><b>Last Price</b></td>
+                                                    <td>{{selectedStock.LastPrice}}</td>
+                                                </tr>
+                                                <tr class="selectedStockTable">
+                                                    <td class="oddClass"><b>Change (Change Percent)</b></td>
+                                                    <td class="oddClass">
+                                                        <div ng-show="(selectedStock.Change > 0)" style="color:green;">
+                                                            {{ getChangePercent(selectedStock) }}
+                                                            <img id="arrow" src="http://cs-server.usc.edu:45678/hw/hw6/images/Green_Arrow_Up.png" />
+                                                        </div>
+                                                        <div ng-hide="!selectedStock || (selectedStock.Change >= 0)" style="color:red;">
+                                                            {{ getChangePercent(selectedStock) }}
+                                                            <img id="arrow" src="http://cs-server.usc.edu:45678/hw/hw6/images/Red_Arrow_Down.png" />
+                                                        </div>
+                                                        <div ng-show="(selectedStock.Change == 0)" style="color:green;">
+                                                            0 ( 0.00% )
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="selectedStockTable">
+                                                    <td><b>Timestamp</b></td>
+                                                    <td>{{selectedStock.Timestamp}}</td>
+                                                </tr>
+                                                <tr class="selectedStockTable">
+                                                    <td class="oddClass"><b>Open</b></td>
+                                                    <td class="oddClass">{{selectedStock.Open}}</td>
+                                                </tr>
+                                                <tr class="selectedStockTable">
+                                                    <td><b>Close</b></td>
+                                                    <td>{{selectedStock.Close}}</td>
+                                                </tr>
+                                                <tr class="selectedStockTable">
+                                                    <td class="oddClass"><b>Day's Range</b></td>
+                                                    <td class="oddClass">{{selectedStock.DaysRange}}</td>
+                                                </tr>
+                                                <tr class="selectedStockTable">
+                                                    <td><b>Volume</b></td>
+                                                    <td>{{selectedStock.Volume}}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div ng-hide="currentStockDataReceived" style="margin-top:50%;">
+                                        <uib-progressbar class="progress-striped active" animate="true" max="100" value="currentStockProgressvalue" style="width:100%"
+                                            type="info" type="success">
+                                        </uib-progressbar>
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <form name="outerForm" class="tab-form-demo">
+                                        <uib-tabset active="activeForm">
+                                            <uib-tab index="0" heading="Price" select="priceSelected()">
+                                                <div ng-show="currentStockDataReceived" id="priceGraph"></div>
+                                                <div ng-hide="currentStockDataReceived" style="margin-top:28%;">
+                                                    <uib-progressbar class="progress-striped active" animate="true" max="100" value="currentStockProgressvalue" style="width:100%"
+                                                        type="info" type="success">
+                                                    </uib-progressbar>
+                                                </div>
+                                            </uib-tab>
+                                            <uib-tab index="1" heading="SMA" select="functionSelected('SMA')">
+                                                <div ng-show="currentStockDataReceived" id="graphAreaSMA"></div>
+                                                <div ng-hide="currentStockDataReceived" style="margin-top:28%;">
+                                                    <uib-progressbar class="progress-striped active" animate="true" max="100" value="currentStockProgressvalue" style="width:100%"
+                                                        type="info" type="success">
+                                                    </uib-progressbar>
+                                                </div>
+                                            </uib-tab>
+                                            <uib-tab index="2" heading="EMA" select="functionSelected('EMA')">
+                                                <div ng-show="currentStockDataReceived" id="graphAreaEMA"></div>
+                                                <div ng-hide="currentStockDataReceived" style="margin-top:28%;">
+                                                    <uib-progressbar class="progress-striped active" animate="true" max="100" value="currentStockProgressvalue" style="width:100%"
+                                                        type="info" type="success">
+                                                    </uib-progressbar>
+                                                </div>
+                                            </uib-tab>
+                                            <uib-tab index="3" heading="STOCH" select="functionSelected('STOCH')">
+                                                <div ng-show="currentStockDataReceived" id="graphAreaSTOCH"></div>
+                                                <div ng-hide="currentStockDataReceived" style="margin-top:28%;">
+                                                    <uib-progressbar class="progress-striped active" animate="true" max="100" value="currentStockProgressvalue" style="width:100%"
+                                                        type="info" type="success">
+                                                    </uib-progressbar>
+                                                </div>
+                                            </uib-tab>
+                                            <uib-tab index="4" heading="RSI" select="functionSelected('RSI')">
+                                                <div ng-show="currentStockDataReceived" id="graphAreaRSI"></div>
+                                                <div ng-hide="currentStockDataReceived" style="margin-top:28%;">
+                                                    <uib-progressbar class="progress-striped active" animate="true" max="100" value="currentStockProgressvalue" style="width:100%"
+                                                        type="info" type="success">
+                                                    </uib-progressbar>
+                                                </div>
+                                            </uib-tab>
+                                            <uib-tab index="5" heading="ADX" select="functionSelected('ADX')">
+                                                <div ng-show="currentStockDataReceived" id="graphAreaADX"></div>
+                                                <div ng-hide="currentStockDataReceived" style="margin-top:28%;">
+                                                    <uib-progressbar class="progress-striped active" animate="true" max="100" value="currentStockProgressvalue" style="width:100%"
+                                                        type="info" type="success">
+                                                    </uib-progressbar>
+                                                </div>
+                                            </uib-tab>
+                                            <uib-tab index="6" heading="CCI" select="functionSelected('CCI')">
+                                                <div ng-show="currentStockDataReceived" id="graphAreaCCI"></div>
+                                                <div ng-hide="currentStockDataReceived" style="margin-top:28%;">
+                                                    <uib-progressbar class="progress-striped active" animate="true" max="100" value="currentStockProgressvalue" style="width:100%"
+                                                        type="info" type="success">
+                                                    </uib-progressbar>
+                                                </div>
+                                            </uib-tab>
+                                            <uib-tab index="7" heading="BBANDS" select="functionSelected('BBANDS')">
+                                                <div ng-show="currentStockDataReceived" id="graphAreaBBANDS"></div>
+                                                <div ng-hide="currentStockDataReceived" style="margin-top:28%;">
+                                                    <uib-progressbar class="progress-striped active" animate="true" max="100" value="currentStockProgressvalue" style="width:100%"
+                                                        type="info" type="success">
+                                                    </uib-progressbar>
+                                                </div>
+                                            </uib-tab>
+                                            <uib-tab index="8" heading="MACD" select="functionSelected('MACD')">
+                                                <div ng-show="currentStockDataReceived" id="graphAreaMACD"></div>
+                                                <div ng-hide="currentStockDataReceived" style="margin-top:28%;">
+                                                    <uib-progressbar class="progress-striped active" animate="true" max="100" value="currentStockProgressvalue" style="width:100%"
+                                                        type="info" type="success">
+                                                    </uib-progressbar>
+                                                </div>
+                                            </uib-tab>
+                                        </uib-tabset>
+                                    </form>
+                                </div>
+                            </div>
+                        </uib-tab>
+                        <uib-tab index="1" select="historicCharts()">
+                            <uib-tab-heading><i class="fa fa-bar-chart" aria-hidden="true"><font face = "Arial"> Historical Charts</font></i>
+                            </uib-tab-heading>
+                            <div style="height: 500px;" id="historicChartsDiv">
+                            </div>
+                        </uib-tab>
+                        <uib-tab index="2" select="newsTabClicked()">
+                            <uib-tab-heading><i class="fa fa-link" aria-hidden="true"><font face = "Arial"> News Feeds</font></i>
+                            </uib-tab-heading>
+                            <div style="height: 500px;overflow-y: auto;">
+                                <br/>
+                                <div ng-repeat="feed in newsfeeds track by $index">
+                                    <div id="newsFeed">
+                                        <h4 style="color:#337AB7">&nbsp;&nbsp;&nbsp;{{feed.title}}</h4>
+                                        <b> &nbsp;&nbsp;&nbsp;Author: {{feed.author}} </b><br/>
+                                        <b> &nbsp;&nbsp;&nbsp;Date: {{feed.date}} </b>
+                                        <br/><br/></br>
+                                    </div>
+                                    </br>
+                                </div>
+                            </div>
+                        </uib-tab>
+                    </uib-tabset>
                 </div>
-            </uib-tab>
-        </uib-tabset>
+            </div>
+            <br/>
+            <br/>
+        </div>
     </div>
-</div>
-<br/>
-<br/>
-</div>
-</div>
-</div>
+    </div>
 </body>
+
 </html>

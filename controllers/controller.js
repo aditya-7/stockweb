@@ -113,7 +113,10 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
         var favouriteStocks = (localStorage.getItem("favourites") || "[]")
         $http.get("/favouriteStocks?symbols=" + favouriteStocks)
             .then(function (response) {
-                $scope.favouriteStocks = response.data;
+                $scope.favouriteStocks = response.data || [];
+                for(var i=0; i<$scope.favouriteStocks.length; i++) {
+                    $scope.favouriteStocks[i].LastPrice = parseFloat($scope.favouriteStocks[i].LastPrice);
+                }
                 $scope.sortFavourites();
             });
     }
@@ -150,6 +153,7 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
 
     $scope.sortFavourites = function () {
         var selecteddatapoint = (($scope.selecteddatapoint === "Stock Price") ? "LastPrice" : $scope.selecteddatapoint);
+        console.log("type:::::", typeof $scope.favouriteStocks[0].LastPrice);
         if ($scope.selectedorder === "Ascending") {
             $scope.favouriteStocks = _.sortBy($scope.favouriteStocks, selecteddatapoint);
         } else {
@@ -220,7 +224,6 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
                     FB.ui({
                         method: 'feed',
                         name: 'Highcharts',
-//                        link: 'https://developers.facebook.com/docs/dialogs/',
                         picture: window.location.origin + "/" + response.data,
                         caption: 'Reference Documentation',
                         description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
@@ -237,8 +240,6 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
 
         };
         image.src = 'data:image/svg+xml;base64,' + window.btoa(svg);
-        // }
-
 
     };
 
@@ -358,7 +359,6 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
     $scope.newsTabClicked = function () {
         $http.get("/news?symbol=" + inputSymbol)
             .then(function (response) {
-                console.log('News Feed ', response.data);
                 $scope.newsfeeds = response.data;
             });
     };
@@ -800,11 +800,7 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
                     data.push([timestamp[i], historicPrices[i]]);
                 }
 
-                console.log(data);
-
-
-
-                chart = Highcharts.stockChart('historicChartsDiv', {
+                Highcharts.stockChart('historicChartsDiv', {
 
                     chart: {
                         type: 'area',
