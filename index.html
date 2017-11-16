@@ -232,7 +232,7 @@
                                         </div>
                                     </div><br/>
 
-                                    <div ng-show="currentStockDataReceived">
+                                    <div ng-show="currentStockDataReceivedForTable">
 
                                         <div class="row">
                                             <br/>
@@ -284,7 +284,7 @@
                                             </table>
                                         </div>
                                     </div>
-                                    <div ng-hide="currentStockDataReceived" style="margin-top:50%;">
+                                    <div ng-hide="currentStockDataReceivedForTable" style="margin-top:50%;">
                                         <uib-progressbar class="progress-striped active" animate="true" max="100" value="currentStockProgressvalue" style="width:100%"
                                             type="info" type="success">
                                         </uib-progressbar>
@@ -373,7 +373,12 @@
                         <uib-tab index="1" select="historicCharts()">
                             <uib-tab-heading><i class="fa fa-bar-chart" aria-hidden="true"><font face = "Arial"> Historical Charts</font></i>
                             </uib-tab-heading>
-                            <div style="height: 500px;" id="historicChartsDiv">
+                            <div ng-hide="historicChartsDataReceived" style="margin-top:28%;">
+                                <uib-progressbar class="progress-striped active" animate="true" max="100" value="historicChartsProgressvalue" style="width:100%"
+                                    type="info" type="success">
+                                </uib-progressbar>
+                            </div>
+                            <div style="height: 500px;" ng-show="historicChartsDataReceived" id="historicChartsDiv">
                             </div>
                         </uib-tab>
                         <uib-tab index="2" select="newsTabClicked()">

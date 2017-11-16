@@ -50,6 +50,7 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
     };
 
     $scope.currentStockDataReceived = false;
+    $scope.currentStockDataReceivedForTable = false;
     $scope.currentStockProgressvalue = 0;
     var inputSymbol;
     var currentStockProgressInterval;
@@ -72,6 +73,7 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
             .then(function (response) {
                 $scope.currentStockProgressvalue = 100;
                 setTimeout(function () {
+                    $scope.currentStockDataReceivedForTable = true;
                     $scope.currentStockDataReceived = true;
                     $scope.selectedStock = response.data.table;
                     $scope.isEnabled = true;
@@ -114,7 +116,7 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
         $http.get("/favouriteStocks?symbols=" + favouriteStocks)
             .then(function (response) {
                 $scope.favouriteStocks = response.data || [];
-                for(var i=0; i<$scope.favouriteStocks.length; i++) {
+                for (var i = 0; i < $scope.favouriteStocks.length; i++) {
                     $scope.favouriteStocks[i].LastPrice = parseFloat($scope.favouriteStocks[i].LastPrice);
                 }
                 $scope.sortFavourites();
@@ -367,463 +369,463 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
 
     $scope.functionSelected = function (title) {
 
+        $scope.currentStockDataReceived = false;
+        $scope.currentStockProgressvalue += 5;
+        currentStockProgressInterval = setInterval(function () {
+            $scope.currentStockProgressvalue += 10;
+        }, 250);
         $http.get('/charts?', { params: { "function": title, "symbol": inputSymbol } })
             .then(function (response) {
 
-                if (title === 'SMA') {
-                    graphType = 'graphAreaSMA';
-                } else if (title === 'EMA') {
-                    graphType = 'graphAreaEMA';
-                } else if (title === 'STOCH') {
-                    graphType = 'graphAreaSTOCH';
-                } else if (title === 'RSI') {
-                    graphType = 'graphAreaRSI';
-                } else if (title === 'ADX') {
-                    graphType = 'graphAreaADX';
-                } else if (title === 'CCI') {
-                    graphType = 'graphAreCCI';
-                } else if (title === 'BBANDS') {
-                    graphType = 'graphAreaBBANDS';
-                } else if (title === 'MACD') {
-                    graphType = 'graphAreaMACD';
-                }
+                setTimeout(function () {
 
-                var data = response.data;
-                var values = data.values;
-                var dates = data.dates;
-
-                var formattedDates = [];
-
-                for (var i = 0; i < dates.length; i++) {
-
-                    formattedDates.push(dates[i].replace(/-/g, '\/').substring(5, dates[i].length));
-
-                }
-
-                console.log('dates ', formattedDates);
-
-
-                var slowD = [];
-                var slowK = [];
-
-                var lowerBands = [];
-                var middleBands = [];
-                var upperBands = [];
-
-                var macdHist = [];
-                var macdSignal = [];
-                var macd = [];
-
-                if (title === 'STOCH') {
-                    slowD = data.slowD;
-                    slowK = data.slowK;
-
-                    for (var i = 0; i < slowD.length; i++) {
-                        slowD[i] = parseFloat(slowD[i], 10);
-                        slowK[i] = parseFloat(slowK[i], 10);
-                    }
-                } else if (title === 'BBANDS') {
-
-                    lowerBands = data.lowerBand;
-                    middleBands = data.middleBand;
-                    upperBands = data.upperBand;
-
-                    for (var i = 0; i < lowerBands.length; i++) {
-                        lowerBands[i] = parseFloat(lowerBands[i], 10);
-                        middleBands[i] = parseFloat(middleBands[i], 10);
-                        upperBands[i] = parseFloat(upperBands[i], 10);
+                    $scope.currentStockDataReceived = true;
+                    $scope.currentStockProgressvalue = 0;
+                    clearInterval(currentStockProgressInterval);
+                    $scope.$apply();
+                    if (title === 'SMA') {
+                        graphType = 'graphAreaSMA';
+                    } else if (title === 'EMA') {
+                        graphType = 'graphAreaEMA';
+                    } else if (title === 'STOCH') {
+                        graphType = 'graphAreaSTOCH';
+                    } else if (title === 'RSI') {
+                        graphType = 'graphAreaRSI';
+                    } else if (title === 'ADX') {
+                        graphType = 'graphAreaADX';
+                    } else if (title === 'CCI') {
+                        graphType = 'graphAreCCI';
+                    } else if (title === 'BBANDS') {
+                        graphType = 'graphAreaBBANDS';
+                    } else if (title === 'MACD') {
+                        graphType = 'graphAreaMACD';
                     }
 
-                } else if (title === 'MACD') {
+                    var data = response.data;
+                    var values = data.values;
+                    var dates = data.dates;
 
-                    macdHist = data.macdHist;
-                    macdSignal = data.macdSignal;
-                    macd = data.macd;
+                    var formattedDates = [];
 
-                    for (var i = 0; i < macd.length; i++) {
-                        macdHist[i] = parseFloat(macdHist[i], 10);
-                        macdSignal[i] = parseFloat(macdSignal[i], 10);
-                        macd[i] = parseFloat(macd[i], 10);
+                    for (var i = 0; i < dates.length; i++) {
+
+                        formattedDates.push(dates[i].replace(/-/g, '\/').substring(5, dates[i].length));
+
                     }
 
-
-                } else {
-
-                    for (var i = 0; i < values.length; i++) {
-                        values[i] = parseFloat(values[i], 10);
-                    }
-                }
+                    console.log('dates ', formattedDates);
 
 
+                    var slowD = [];
+                    var slowK = [];
 
-                //Chart area:
+                    var lowerBands = [];
+                    var middleBands = [];
+                    var upperBands = [];
 
-                if (title === 'STOCH') {
+                    var macdHist = [];
+                    var macdSignal = [];
+                    var macd = [];
 
-                    chart = Highcharts.chart(graphType, {
+                    if (title === 'STOCH') {
+                        slowD = data.slowD;
+                        slowK = data.slowK;
 
-                        chart: {
-                            zoomType: 'x',
-                            borderColor: 'gray',
-                            borderWidth: 1,
-                            type: 'line',
-                        },
+                        for (var i = 0; i < slowD.length; i++) {
+                            slowD[i] = parseFloat(slowD[i], 10);
+                            slowK[i] = parseFloat(slowK[i], 10);
+                        }
+                    } else if (title === 'BBANDS') {
 
-                        title: {
-                            text: data.names
-                        },
+                        lowerBands = data.lowerBand;
+                        middleBands = data.middleBand;
+                        upperBands = data.upperBand;
 
-                        subtitle: {
-                            text: 'Source: <a href="https://www.alphavantage.co/"> Alpha Vantage</a>',
-                            style: {
-                                color: "#0000ff"
-                            }
-                        },
-
-                        colors: ['red', 'green'],
-
-                        xAxis: [{
-                            categories: formattedDates.slice(0, 120),
-                            crosshair: true,
-                            tickInterval: 7,
-                            labels: {
-                                rotation: -45
-                            }
-                        }],
-
-                        yAxis: {
-                            title: {
-                                text: data.names
-
-                            }
-                        },
-                        plotOptions: {
-                            series: {
-                                label: {
-                                    connectorAllowed: false
-                                }
-                            }
-                        },
-
-                        tooltip: {
-                            pointFormat: "Value: {point.y:.2f}"
-                        },
-
-                        series: [{
-                            type: 'line',
-                            name: inputSymbol + ' SlowD',
-                            data: slowD.slice(0, 120)
-                        }, {
-                            type: 'line',
-                            name: inputSymbol + ' SlowK',
-                            data: slowK.slice(0, 120)
-                        }],
-
-                        responsive: {
-                            rules: [{
-                                condition: {
-                                    maxWidth: 500
-                                },
-                                chartOptions: {
-                                    legend: {
-                                        layout: 'horizontal',
-                                        align: 'center',
-                                        verticalAlign: 'bottom'
-                                    }
-                                }
-                            }]
+                        for (var i = 0; i < lowerBands.length; i++) {
+                            lowerBands[i] = parseFloat(lowerBands[i], 10);
+                            middleBands[i] = parseFloat(middleBands[i], 10);
+                            upperBands[i] = parseFloat(upperBands[i], 10);
                         }
 
-                    });
+                    } else if (title === 'MACD') {
 
-                } else if (title === 'BBANDS') {
+                        macdHist = data.macdHist;
+                        macdSignal = data.macdSignal;
+                        macd = data.macd;
 
-                    chart = Highcharts.chart(graphType, {
-
-                        chart: {
-                            zoomType: 'x',
-                            borderColor: 'gray',
-                            borderWidth: 1,
-                            type: 'line',
-                        },
-
-                        title: {
-                            text: data.names
-                        },
-
-                        subtitle: {
-                            text: 'Source: <a href="https://www.alphavantage.co/"> Alpha Vantage</a>',
-                            style: {
-                                color: "#0000ff"
-                            }
-                        },
-
-                        colors: ['black', '#7EC0EE', '#cc0000'],
-
-                        xAxis: [{
-                            categories: formattedDates.slice(0, 120).reverse(),
-                            crosshair: true,
-                            tickInterval: 7,
-                            labels: {
-                                rotation: -45
-                            }
-                        }],
-
-                        yAxis: {
-                            title: {
-                                text: data.names
-
-                            }
-                        },
-
-                        plotOptions: {
-                            series: {
-                                marker: {
-                                    enabled: false
-                                }
-                            }
-                        },
-                        tooltip: {
-                            pointFormat: "Value: {point.y:.2f}"
-                        },
-                        series: [{
-                            type: 'line',
-                            name: inputSymbol + ' Real Lower Bands',
-                            data: lowerBands.slice(0, 120).reverse()
-                        }, {
-                            type: 'line',
-                            name: inputSymbol + ' Real Upper Bands',
-                            data: upperBands.slice(0, 120).reverse()
-                        }, {
-                            type: 'line',
-                            name: inputSymbol + ' Real Middle Bands',
-                            data: middleBands.slice(0, 120).reverse()
-                        }],
-
-                        responsive: {
-                            rules: [{
-                                condition: {
-                                    maxWidth: 500
-                                },
-                                chartOptions: {
-                                    legend: {
-                                        layout: 'horizontal',
-                                        align: 'center',
-                                        verticalAlign: 'bottom'
-                                    }
-                                }
-                            }]
+                        for (var i = 0; i < macd.length; i++) {
+                            macdHist[i] = parseFloat(macdHist[i], 10);
+                            macdSignal[i] = parseFloat(macdSignal[i], 10);
+                            macd[i] = parseFloat(macd[i], 10);
                         }
 
-                    });
 
-                } else if (title === 'MACD') {
+                    } else {
 
-                    chart = Highcharts.chart(graphType, {
+                        for (var i = 0; i < values.length; i++) {
+                            values[i] = parseFloat(values[i], 10);
+                        }
+                    }
 
-                        chart: {
-                            zoomType: 'x',
-                            borderColor: 'gray',
-                            borderWidth: 1,
-                            type: 'line',
-                        },
+                    //Chart area:
 
-                        title: {
-                            text: data.names
-                        },
-
-                        subtitle: {
-                            text: 'Source: <a href="https://www.alphavantage.co/"> Alpha Vantage</a>',
-                            style: {
-                                color: "#0000ff"
-                            }
-                        },
-
-                        colors: ['black', '#7EC0EE', '#cc0000'],
-
-                        xAxis: [{
-                            categories: formattedDates.slice(0, 120).reverse(),
-                            crosshair: true,
-                            tickInterval: 7,
-                            labels: {
-                                rotation: -45
-                            }
-                        }],
-
-                        yAxis: {
+                    if (title === 'STOCH') {
+                        chart = Highcharts.chart(graphType, {
+                            chart: {
+                                zoomType: 'x',
+                                borderColor: 'gray',
+                                borderWidth: 1,
+                                type: 'line',
+                            },
                             title: {
                                 text: data.names
-
-                            }
-                        },
-                        plotOptions: {
-                            series: {
-                                marker: {
-                                    enabled: false
+                            },
+                            subtitle: {
+                                text: 'Source: <a href="https://www.alphavantage.co/"> Alpha Vantage</a>',
+                                style: {
+                                    color: "#0000ff"
                                 }
-                            }
-                        },
-                        tooltip: {
-                            pointFormat: "Value: {point.y:.2f}"
-                        },
-                        series: [{
-                            type: 'line',
-                            name: inputSymbol + ' MACD Hist',
-                            data: macdHist.slice(0, 120).reverse()
-                        }, {
-                            type: 'line',
-                            name: inputSymbol + ' MACD Signal',
-                            data: macdSignal.slice(0, 120).reverse()
-                        }, {
-                            type: 'line',
-                            name: inputSymbol + ' MACD',
-                            data: macd.slice(0, 120).reverse()
-                        }],
-
-                        responsive: {
-                            rules: [{
-                                condition: {
-                                    maxWidth: 500
-                                },
-                                chartOptions: {
-                                    legend: {
-                                        layout: 'horizontal',
-                                        align: 'center',
-                                        verticalAlign: 'bottom'
+                            },
+                            colors: ['red', 'green'],
+                            xAxis: [{
+                                categories: formattedDates.slice(0, 120),
+                                crosshair: true,
+                                tickInterval: 7,
+                                labels: {
+                                    rotation: -45
+                                }
+                            }],
+                            yAxis: {
+                                title: {
+                                    text: data.names
+                                }
+                            },
+                            plotOptions: {
+                                series: {
+                                    label: {
+                                        connectorAllowed: false
                                     }
                                 }
-                            }]
-                        }
-
-                    });
-
-                }
-                else {
-
-                    chart = Highcharts.chart(graphType, {
-
-                        chart: {
-                            zoomType: 'x',
-                            borderColor: 'gray',
-                            borderWidth: 1,
-                            type: 'line',
-                        },
-
-                        title: {
-                            text: response.data.names
-                        },
-
-                        subtitle: {
-                            text: 'Source: <a href="https://www.alphavantage.co/"> Alpha Vantage</a>',
-                            style: {
-                                color: "#0000ff"
+                            },
+                            tooltip: {
+                                pointFormat: "Value: {point.y:.2f}"
+                            },
+                            series: [{
+                                type: 'line',
+                                name: inputSymbol + ' SlowD',
+                                data: slowD.slice(0, 120)
+                            }, {
+                                type: 'line',
+                                name: inputSymbol + ' SlowK',
+                                data: slowK.slice(0, 120)
+                            }],
+                            responsive: {
+                                rules: [{
+                                    condition: {
+                                        maxWidth: 500
+                                    },
+                                    chartOptions: {
+                                        legend: {
+                                            layout: 'horizontal',
+                                            align: 'center',
+                                            verticalAlign: 'bottom'
+                                        }
+                                    }
+                                }]
                             }
-                        },
+                        });
 
-                        colors: ['red'],
+                    } else if (title === 'BBANDS') {
 
-                        xAxis: [{
-                            categories: formattedDates.slice(0, 120).reverse(),
-                            crosshair: true,
-                            tickInterval: 7,
-                            labels: {
-                                rotation: -45
+                        chart = Highcharts.chart(graphType, {
+
+                            chart: {
+                                zoomType: 'x',
+                                borderColor: 'gray',
+                                borderWidth: 1,
+                                type: 'line',
+                            },
+
+                            title: {
+                                text: data.names
+                            },
+
+                            subtitle: {
+                                text: 'Source: <a href="https://www.alphavantage.co/"> Alpha Vantage</a>',
+                                style: {
+                                    color: "#0000ff"
+                                }
+                            },
+
+                            colors: ['black', '#7EC0EE', '#cc0000'],
+
+                            xAxis: [{
+                                categories: formattedDates.slice(0, 120).reverse(),
+                                crosshair: true,
+                                tickInterval: 7,
+                                labels: {
+                                    rotation: -45
+                                }
+                            }],
+
+                            yAxis: {
+                                title: {
+                                    text: data.names
+
+                                }
+                            },
+
+                            plotOptions: {
+                                series: {
+                                    marker: {
+                                        enabled: false
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                pointFormat: "Value: {point.y:.2f}"
+                            },
+                            series: [{
+                                type: 'line',
+                                name: inputSymbol + ' Real Lower Bands',
+                                data: lowerBands.slice(0, 120).reverse()
+                            }, {
+                                type: 'line',
+                                name: inputSymbol + ' Real Upper Bands',
+                                data: upperBands.slice(0, 120).reverse()
+                            }, {
+                                type: 'line',
+                                name: inputSymbol + ' Real Middle Bands',
+                                data: middleBands.slice(0, 120).reverse()
+                            }],
+
+                            responsive: {
+                                rules: [{
+                                    condition: {
+                                        maxWidth: 500
+                                    },
+                                    chartOptions: {
+                                        legend: {
+                                            layout: 'horizontal',
+                                            align: 'center',
+                                            verticalAlign: 'bottom'
+                                        }
+                                    }
+                                }]
                             }
-                        }],
 
-                        yAxis: {
+                        });
+
+                    } else if (title === 'MACD') {
+
+                        chart = Highcharts.chart(graphType, {
+
+                            chart: {
+                                zoomType: 'x',
+                                borderColor: 'gray',
+                                borderWidth: 1,
+                                type: 'line',
+                            },
+
+                            title: {
+                                text: data.names
+                            },
+
+                            subtitle: {
+                                text: 'Source: <a href="https://www.alphavantage.co/"> Alpha Vantage</a>',
+                                style: {
+                                    color: "#0000ff"
+                                }
+                            },
+
+                            colors: ['black', '#7EC0EE', '#cc0000'],
+
+                            xAxis: [{
+                                categories: formattedDates.slice(0, 120).reverse(),
+                                crosshair: true,
+                                tickInterval: 7,
+                                labels: {
+                                    rotation: -45
+                                }
+                            }],
+
+                            yAxis: {
+                                title: {
+                                    text: data.names
+
+                                }
+                            },
+                            plotOptions: {
+                                series: {
+                                    marker: {
+                                        enabled: false
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                pointFormat: "Value: {point.y:.2f}"
+                            },
+                            series: [{
+                                type: 'line',
+                                name: inputSymbol + ' MACD Hist',
+                                data: macdHist.slice(0, 120).reverse()
+                            }, {
+                                type: 'line',
+                                name: inputSymbol + ' MACD Signal',
+                                data: macdSignal.slice(0, 120).reverse()
+                            }, {
+                                type: 'line',
+                                name: inputSymbol + ' MACD',
+                                data: macd.slice(0, 120).reverse()
+                            }],
+
+                            responsive: {
+                                rules: [{
+                                    condition: {
+                                        maxWidth: 500
+                                    },
+                                    chartOptions: {
+                                        legend: {
+                                            layout: 'horizontal',
+                                            align: 'center',
+                                            verticalAlign: 'bottom'
+                                        }
+                                    }
+                                }]
+                            }
+
+                        });
+
+                    }
+                    else {
+
+                        chart = Highcharts.chart(graphType, {
+
+                            chart: {
+                                zoomType: 'x',
+                                borderColor: 'gray',
+                                borderWidth: 1,
+                                type: 'line',
+                            },
+
                             title: {
                                 text: response.data.names
+                            },
 
-                            }
-                        },
-
-                        plotOptions: {
-                            series: {
-                                label: {
-                                    connectorAllowed: false
+                            subtitle: {
+                                text: 'Source: <a href="https://www.alphavantage.co/"> Alpha Vantage</a>',
+                                style: {
+                                    color: "#0000ff"
                                 }
-                            }
-                        },
+                            },
 
-                        tooltip: {
-                            pointFormat: "Value: {point.y:.2f}"
-                        },
+                            colors: ['red'],
 
-                        series: [{
-                            type: 'line',
-                            name: inputSymbol,
-                            data: values.slice(0, 120).reverse()
-                        }],
+                            xAxis: [{
+                                categories: formattedDates.slice(0, 120).reverse(),
+                                crosshair: true,
+                                tickInterval: 7,
+                                labels: {
+                                    rotation: -45
+                                }
+                            }],
 
-                        responsive: {
-                            rules: [{
-                                condition: {
-                                    maxWidth: 500
-                                },
-                                chartOptions: {
-                                    legend: {
-                                        layout: 'horizontal',
-                                        align: 'center',
-                                        verticalAlign: 'bottom'
+                            yAxis: {
+                                title: {
+                                    text: response.data.names
+
+                                }
+                            },
+
+                            plotOptions: {
+                                series: {
+                                    label: {
+                                        connectorAllowed: false
                                     }
                                 }
-                            }]
-                        }
+                            },
 
-                    });
+                            tooltip: {
+                                pointFormat: "Value: {point.y:.2f}"
+                            },
 
-                }
+                            series: [{
+                                type: 'line',
+                                name: inputSymbol,
+                                data: values.slice(0, 120).reverse()
+                            }],
 
+                            responsive: {
+                                rules: [{
+                                    condition: {
+                                        maxWidth: 500
+                                    },
+                                    chartOptions: {
+                                        legend: {
+                                            layout: 'horizontal',
+                                            align: 'center',
+                                            verticalAlign: 'bottom'
+                                        }
+                                    }
+                                }]
+                            }
 
+                        });
 
+                    }
+
+                }, 250);
 
             });
     }
 
+    $scope.historicChartsDataReceived = true;
+    $scope.historicChartsProgressvalue = 0;
     $scope.historicCharts = function () {
+        $scope.historicChartsDataReceived = false;
+        $scope.historicChartsProgressvalue += 5;
+        historicChartsProgressInterval = setInterval(function () {
+            $scope.historicChartsProgressvalue += 10;
+        }, 250);
         $http.get("/quote?symbol=" + inputSymbol)
             .then(function (response) {
-
-                var responseReceived = response.data.historicPrice;
-                var historicTimestamp = response.data.historicTimestamp;
-                var timestamp = [];
-                var data = [];
-
-                var historicPrices = [];
-                for (var i = 0; i < responseReceived.length; i++) {
-                    historicPrices[i] = parseFloat(responseReceived[i], 10);
-                    historicTimestamp[i] = historicTimestamp[i].split("-");
-                    timestamp.push(historicTimestamp[i][1] + "/" + historicTimestamp[i][2] + "/" + historicTimestamp[i][0]);
-                    timestamp[i] = new Date(timestamp[i]).getTime();
-
-                    data.push([timestamp[i], historicPrices[i]]);
-                }
-
-                Highcharts.stockChart('historicChartsDiv', {
-
-                    chart: {
-                        type: 'area',
-                    },
-
-                    rangeSelector: {
-                        selected: 1
-                    },
-
-                    title: {
-                        text: inputSymbol + ' Stock Price'
-                    },
-
-                    series: [{
-                        name: inputSymbol,
-                        data: data.reverse(),
-                        tooltip: {
-                            valueDecimals: 2
-                        }
-                    }]
-                });
-
+                $scope.historicChartsProgressvalue = 100;
+                setTimeout(function () {
+                    $scope.historicChartsDataReceived = true;
+                    $scope.historicChartsProgressvalue = 0;
+                    clearInterval(historicChartsProgressInterval);
+                    $scope.$apply();
+                    var responseReceived = response.data.historicPrice;
+                    var historicTimestamp = response.data.historicTimestamp;
+                    var timestamp = [];
+                    var data = [];
+                    var historicPrices = [];
+                    for (var i = 0; i < responseReceived.length; i++) {
+                        historicPrices[i] = parseFloat(responseReceived[i], 10);
+                        historicTimestamp[i] = historicTimestamp[i].split("-");
+                        timestamp.push(historicTimestamp[i][1] + "/" + historicTimestamp[i][2] + "/" + historicTimestamp[i][0]);
+                        timestamp[i] = new Date(timestamp[i]).getTime();
+                        data.push([timestamp[i], historicPrices[i]]);
+                    }
+                    Highcharts.stockChart('historicChartsDiv', {
+                        chart: {
+                            type: 'area',
+                        },
+                        rangeSelector: {
+                            selected: 1
+                        },
+                        title: {
+                            text: inputSymbol + ' Stock Price'
+                        },
+                        series: [{
+                            name: inputSymbol,
+                            data: data.reverse(),
+                            tooltip: {
+                                valueDecimals: 2
+                            }
+                        }]
+                    });
+                }, 250);
             });
-
     }
 });
