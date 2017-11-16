@@ -290,11 +290,9 @@ app.get('/charts', function (req, res) {
     });
 });
 
-var gm = require('gm');
-
-app.post('/uploadChart', function (req, res) {
-    var svg = req.body.svg;
-    console.log("svg: ", svg);
+app.get('/uploadChart', function (req, res) {
+    var img = req.query.img;
+    console.log("img: ", JSON.stringify(img));
     res.send("done");
 });
 
