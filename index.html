@@ -57,28 +57,6 @@
 
     <!--  JQuery  -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#contact_form').bootstrapValidator({
-                // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
-                feedbackIcons: {
-                    validating: 'glyphicon glyphicon-refresh'
-                },
-                fields: {
-                    first_name: {
-                        validators: {
-                            stringLength: {
-                                min: 2,
-                            },
-                            notEmpty: {
-                                message: 'Please supply your first name'
-                            }
-                        }
-                    }
-                }
-            })
-        });
-    </script>
 </head>
 
 <body ng-app="myApp" ng-controller="searchSymbolController as vm" ng-style="{'background-image':'url(http://cs-server.usc.edu:45678/hw/hw8/images/background.png)'}">
@@ -98,9 +76,14 @@
                             </div>
                             <div class="col-md-5">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" ng-model="vm.inputSymbol" placeholder="e.g. AAPL" auto-complete="vm.autoCompleteOptions"
-                                        required oninvalid="this.setCustomValidity('This cant be left empty')" onchange="this.setCustomValidity('')"
-                                    />
+                                    <input type="text" class="form-control" ng-model="vm.inputSymbol" placeholder="e.g. AAPL" auto-complete="vm.autoCompleteOptions" 
+                                    ng-change="checkEmpty()" required/>
+                                    <span style="color:red;" ng-show="noticker">
+                                        * This field can't be left empty
+                                    </span>
+                                    <span style="color:red;" ng-show="spaceinticker">
+                                        * There should not be a space in the ticker symbol
+                                    </span>
                                 </div>
                             </div>
                             <div class="col-md-4">

@@ -23,21 +23,40 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
     // For automatic refresh
     var automaticRefreshTime = 10 * 1000;    //5 seconds
 
+    $scope.noticker = false;
+    $scope.spaceinticker = false;
+
+    $scope.checkEmpty = function () {
+        console.log("checkEmpty vm.inputSymbol", vm.inputSymbol);
+        $scope.getQuoteDisabled = false;
+        $scope.noticker = false;
+        $scope.spaceinticker = false;
+        if (!vm.inputSymbol || vm.inputSymbol == "") {
+            $scope.noticker = true;
+            $scope.getQuoteDisabled = true;
+        }
+    };
+    var previous = '';
+
     // For the auto-complete feature
     var vm = this;
     vm.inputSymbol = null;
     vm.autoCompleteOptions = {
         minimumChars: 1,
         data: function (term) {
-            if (term == "") $scope.getQuoteDisabled = true;
-            else $scope.getQuoteDisabled = false;
             return $http.get('/lookup?input=' + term)
                 .then(function (response) {
+                    if (!((vm.inputSymbol.indexOf("(") > -1) && (vm.inputSymbol.indexOf(")") > -1))) {
+                        if(vm.inputSymbol.indexOf(" ") > -1) {
+                            $scope.spaceinticker =true;
+                            $scope.getQuoteDisabled = true;
+                            return [];
+                        }
+                    }
                     term = term.toUpperCase();
                     var results = response.data;
                     var suggestions = [];
                     for (var i = 0; i < results.length; i++) {
-                        console.log(results[i]);
                         suggestions.push(
                             results[i].Symbol + " - " +
                             results[i].Name + " (" +
