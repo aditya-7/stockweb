@@ -4,9 +4,8 @@ var express = require('express'),
 var request = require('request');
 var parseString = require('xml2js').parseString;
 var bodyParser = require('body-parser');
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb'}));
 const ALPHA_VANTAGE_API_KEY = "5M9YGPO0TT8VGN1Z";
 
 app.use('/', express.static(__dirname + '/'));
@@ -290,10 +289,13 @@ app.get('/charts', function (req, res) {
     });
 });
 
-app.get('/uploadChart', function (req, res) {
-    var img = req.query.img;
-    console.log("img: ", JSON.stringify(img));
-    res.send("done");
+app.post('/uploadChart', function (req, res) {
+    var img = req.body.img;
+    var base64Data = req.body.img.replace(/^data:image\/png;base64,/, "");
+    require("fs").writeFile("chart.png", base64Data, 'base64', function (err) {
+        console.log(err);
+        res.send("chart.png");
+    });
 });
 
 app.listen(port, function () {

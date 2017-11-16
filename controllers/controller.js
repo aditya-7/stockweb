@@ -193,6 +193,7 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
 
         var EXPORT_WIDTH = 1000;
 
+        // function save_chart(chart, filename) {
         var filename = "img";
         var render_width = EXPORT_WIDTH;
         var render_height = render_width * chart.chartHeight / chart.chartWidth
@@ -211,26 +212,32 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
         var image = new Image;
         image.onload = function () {
             canvas.getContext('2d').drawImage(this, 0, 0, render_width, render_height);
-            var data = canvas.toDataURL("image/png")
-            FB.ui({
-                method: 'feed',
-                name: 'Highcharts',
-                link: 'https://developers.facebook.com/docs/dialogs/',
-                picture: data,
-                caption: 'Reference Documentation',
-                description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
-            }, (response) => {
-                if (response && !response.error_message) {
-                    //succeed
-                    alert('Posting completed.');
-                } else {
-                    //fail
-                    alert('Error while posting.');
-                }
-            });
+            var data = canvas.toDataURL("image/png");
+            $http.post("/uploadChart", { img: data })
+                .then(function (response) {
+                    console.log("response", response);
+                    console.log("window.location", window.location);
+                    FB.ui({
+                        method: 'feed',
+                        name: 'Highcharts',
+                        link: 'https://developers.facebook.com/docs/dialogs/',
+                        picture: window.location.origin + "/" + response.data,
+                        caption: 'Reference Documentation',
+                        description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
+                    }, (response) => {
+                        if (response && !response.error_message) {
+                            //succeed
+                            alert('Posting completed.');
+                        } else {
+                            //fail
+                            alert('Error while posting.');
+                        }
+                    });
+                })
 
         };
         image.src = 'data:image/svg+xml;base64,' + window.btoa(svg);
+        // }
 
 
     };
