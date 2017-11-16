@@ -220,7 +220,7 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
                     FB.ui({
                         method: 'feed',
                         name: 'Highcharts',
-                        link: 'https://developers.facebook.com/docs/dialogs/',
+//                        link: 'https://developers.facebook.com/docs/dialogs/',
                         picture: window.location.origin + "/" + response.data,
                         caption: 'Reference Documentation',
                         description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
