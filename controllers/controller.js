@@ -191,12 +191,12 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
     // To share stock details on Facebook    
     $scope.shareOnFacebook = function () {
         alert("Share this stock on Facebook");
-
+        console.log("chart.getSvg", chart.getSVG());
         FB.ui({
             method: 'feed',
             name: 'Highcharts',
             link: 'https://developers.facebook.com/docs/dialogs/',
-            picture: 'http://fbrell.com/f8.jpg',
+            picture: chart,
             caption: 'Reference Documentation',
             description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
         }, (response) => {
@@ -219,6 +219,7 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
         }
     };
 
+    var chart;
     //Tab Selection for Price Highcharts
     $scope.priceSelected = function (chartDataPrice) {
         if (!chartDataPrice) return;
@@ -237,7 +238,7 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
 
         }
 
-        Highcharts.chart('priceGraph', {
+        chart = Highcharts.chart('priceGraph', {
             chart: {
                 zoomType: 'x',
                 borderColor: 'gray',
