@@ -274,7 +274,7 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
                 zoomType: 'x',
                 borderColor: 'gray',
                 borderWidth: 1,
-                width: 575,
+                width: 450,
                 marginRight: 10
             },
             title: {
@@ -460,7 +460,7 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
 
                 if (title === 'STOCH') {
 
-                    Highcharts.chart(graphType, {
+                    chart = Highcharts.chart(graphType, {
 
                         chart: {
                             zoomType: 'x',
@@ -538,7 +538,7 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
 
                 } else if (title === 'BBANDS') {
 
-                    Highcharts.chart(graphType, {
+                    chart = Highcharts.chart(graphType, {
 
                         chart: {
                             zoomType: 'x',
@@ -619,7 +619,7 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
 
                 } else if (title === 'MACD') {
 
-                    Highcharts.chart(graphType, {
+                    chart = Highcharts.chart(graphType, {
 
                         chart: {
                             zoomType: 'x',
@@ -700,7 +700,7 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
                 }
                 else {
 
-                    Highcharts.chart(graphType, {
+                    chart = Highcharts.chart(graphType, {
 
                         chart: {
                             zoomType: 'x',
@@ -804,7 +804,7 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
 
 
 
-                Highcharts.stockChart('historicChartsDiv', {
+                chart = Highcharts.stockChart('historicChartsDiv', {
 
                     chart: {
                         type: 'area',
