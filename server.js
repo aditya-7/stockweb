@@ -294,9 +294,9 @@ app.post('/uploadChart', function (req, res) {
     var img = req.body.img;
     var base64Data = req.body.img.replace(/^data:image\/png;base64,/, "");
     require("fs").writeFile(
-        "images/charts/chart" + (++counter) + ".png", base64Data, 'base64', function (err) {
+        "images/chart" + (++counter) + ".png", base64Data, 'base64', function (err) {
         console.log(err);
-        res.send("" + counter);
+        res.send("chart" + counter +  ".png");
     });
 });
 
