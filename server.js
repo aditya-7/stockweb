@@ -289,12 +289,14 @@ app.get('/charts', function (req, res) {
     });
 });
 
+var counter = 0;
 app.post('/uploadChart', function (req, res) {
     var img = req.body.img;
     var base64Data = req.body.img.replace(/^data:image\/png;base64,/, "");
-    require("fs").writeFile("chart.png", base64Data, 'base64', function (err) {
+    require("fs").writeFile(
+        "images/charts/chart" + (++counter) + ".png", base64Data, 'base64', function (err) {
         console.log(err);
-        res.send("chart.png");
+        res.send("" + counter);
     });
 });
 

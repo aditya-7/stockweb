@@ -245,7 +245,7 @@ myApp.controller("searchSymbolController", function ($scope, $http) {
                     FB.ui({
                         method: 'feed',
                         name: 'Highcharts',
-                        picture: window.location.origin + "/" + response.data,
+                        picture: window.location.origin + "/images/charts/chart" + response.data + ".png",
                         caption: 'Reference Documentation',
                         description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
                     }, (response) => {
